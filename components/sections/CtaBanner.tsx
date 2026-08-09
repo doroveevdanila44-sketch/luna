@@ -30,7 +30,7 @@ export function CtaBanner() {
 
           <div className="relative flex min-h-[420px] flex-col justify-start p-6 sm:min-h-[300px] sm:justify-center sm:p-10 lg:min-h-[360px] lg:p-14">
             {/* Три строки заданы явно — сама строка ломаться не должна */}
-            <h2 className="font-display text-[clamp(18px,3vw,34px)] font-bold uppercase leading-[1.22] text-text sm:whitespace-nowrap">
+            <h2 className="font-display text-[clamp(16px,3vw,34px)] font-bold uppercase leading-[1.22] text-text sm:whitespace-nowrap">
               {ctaBanner.titleLine1}
               <br />
               {ctaBanner.titleLine2}

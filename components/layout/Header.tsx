@@ -41,8 +41,10 @@ export function Header() {
     }
   }, [open])
 
+  // На 1024 в строку помещаются логотип, шесть пунктов и кнопка —
+  // поэтому до xl шрифт и просветы навигации мельче
   const navLinkClasses =
-    'font-sans text-[13px] font-medium uppercase tracking-[0.08em] text-text/85 transition-colors hover:text-green'
+    'whitespace-nowrap font-sans text-[12px] font-medium uppercase tracking-[0.06em] text-text/85 transition-colors hover:text-green xl:text-[13px] xl:tracking-[0.08em]'
 
   return (
     <header
@@ -53,10 +55,10 @@ export function Header() {
       }`}
     >
       <div className="container-luna flex items-center gap-6 py-4 lg:py-5">
-        <Logo />
+        <Logo className="shrink-0" />
 
         <nav aria-label="Основная навигация" className="mx-auto hidden lg:block">
-          <ul className="flex items-center gap-6 xl:gap-8">
+          <ul className="flex items-center gap-4 xl:gap-7">
             {mainNav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className={navLinkClasses}>
@@ -88,16 +90,16 @@ export function Header() {
             </span>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            {/* До xl телефон сжимается до иконки — иначе кнопка не влезает */}
             <a
               href={contacts.phone.href}
-              aria-label={ui.callAria}
-              className="inline-flex items-center gap-2 font-sans text-[15px] font-semibold text-text transition-colors hover:text-green xl:hidden"
+              aria-label={`${ui.callAria}: ${contacts.phone.display}`}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-btn border border-line text-green transition-colors hover:border-green xl:hidden"
             >
-              <Phone size={15} className="text-green" aria-hidden />
-              {contacts.phone.display}
+              <Phone size={18} aria-hidden />
             </a>
-            <Button href={headerCta.href} variant="primary">
+            <Button href={headerCta.href} variant="primary" className="shrink-0">
               {headerCta.label}
             </Button>
           </div>

@@ -19,17 +19,21 @@ export function Hero() {
         priority
         sizes="100vw"
         quality={85}
-        className="-z-20 object-cover object-[22%_center] sm:object-[34%_center] lg:object-center"
+        className="-z-20 object-cover object-[40%_center] sm:object-[34%_center] lg:object-center"
       />
 
-      {/* Стык фона и фото не должен читаться линией — docs/DESIGN.md */}
+      {/*
+        Стык фона и фото не должен читаться линией — docs/DESIGN.md.
+        На телефоне работает только вертикальная вуаль: горизонтальная
+        на узком экране закрасила бы кадр целиком и фото пропало бы.
+      */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,var(--bg)_0%,rgba(11,12,10,0.55)_18%,rgba(11,12,10,0)_46%,rgba(11,12,10,0.72)_82%,var(--bg)_100%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,var(--bg)_0%,rgba(11,12,10,0.62)_16%,rgba(11,12,10,0.5)_44%,rgba(11,12,10,0.78)_80%,var(--bg)_100%)] sm:bg-[linear-gradient(to_bottom,var(--bg)_0%,rgba(11,12,10,0.55)_18%,rgba(11,12,10,0)_46%,rgba(11,12,10,0.72)_82%,var(--bg)_100%)]"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,var(--bg)_0%,rgba(11,12,10,0.78)_34%,rgba(11,12,10,0.15)_68%,rgba(11,12,10,0)_100%)]"
+        className="absolute inset-0 -z-10 hidden bg-[linear-gradient(to_right,var(--bg)_0%,rgba(11,12,10,0.78)_34%,rgba(11,12,10,0.15)_68%,rgba(11,12,10,0)_100%)] sm:block"
       />
 
       <div className="container-luna relative w-full pb-20 lg:pb-28">

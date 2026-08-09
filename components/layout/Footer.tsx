@@ -18,9 +18,11 @@ export function Footer() {
   return (
     <footer className="border-t border-line bg-bg">
       <div className="container-luna py-12 lg:py-16">
-        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+        {/* На телефоне «Клуб» и «Информация» стоят в два столбца —
+            иначе футер вытягивает страницу (CLAUDE.md, п.7) */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-9 sm:gap-x-10 lg:grid-cols-12 lg:gap-8">
           {/* Лок-ап, слоган, соцсети */}
-          <div className="lg:col-span-3">
+          <div className="col-span-2 lg:col-span-3">
             <Logo size="md" />
             <p className="mt-5 max-w-[26ch] font-sans text-body text-muted">
               {ui.slogan}
@@ -68,7 +70,7 @@ export function Footer() {
           ))}
 
           {/* Контакты */}
-          <div className="lg:col-span-3">
+          <div className="col-span-2 lg:col-span-3">
             <h3 className="font-display text-[13px] font-bold uppercase tracking-[0.06em] text-text">
               {ui.contactsTitle}
             </h3>
@@ -111,7 +113,7 @@ export function Footer() {
           </div>
 
           {/* Карта */}
-          <div className="lg:col-span-2">
+          <div className="col-span-2 lg:col-span-2">
             <MapCard className="aspect-[16/9] w-full lg:aspect-[4/3]" />
             <p className="mt-3 font-sans text-caption text-muted">{contacts.payment}</p>
           </div>
