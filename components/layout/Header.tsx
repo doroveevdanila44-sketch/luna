@@ -11,14 +11,16 @@ import { contacts } from '@/data/contacts'
 import { ui } from '@/data/home'
 import { headerCta, mainNav } from '@/data/nav'
 
+/** Порог, после которого шапка становится сплошной и сжимается */
+const SCROLL_THRESHOLD = 40
+
 export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
 
-  // Прозрачная поверх hero, при скролле — фон --bg с границей
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12)
+    const onScroll = () => setScrolled(window.scrollY > SCROLL_THRESHOLD)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -41,24 +43,31 @@ export function Header() {
     }
   }, [open])
 
-  // На 1024 в строку помещаются логотип, шесть пунктов и кнопка —
-  // поэтому до xl шрифт и просветы навигации мельче
+  // Шесть пунктов, телефон, адрес и кнопка должны уместиться в одну строку
+  // в контейнере 1232px — отсюда мелкий кегль и скупой трекинг
   const navLinkClasses =
-    'whitespace-nowrap font-sans text-[12px] font-medium uppercase tracking-[0.06em] text-text/85 transition-colors hover:text-green xl:text-[13px] xl:tracking-[0.08em]'
+    'whitespace-nowrap font-sans text-[11px] font-medium uppercase tracking-[0.03em] text-text transition-colors hover:text-green xl:text-[12px] xl:tracking-[0.04em]'
+
+  // Фон сплошной, а не полупрозрачный: сквозь bg/95 просвечивали карточки секций
+  const solid = scrolled || open
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
-        scrolled || open
-          ? 'border-b border-line bg-bg/95 backdrop-blur-md'
+      className={`fixed inset-x-0 top-0 z-[100] transition-[background-color,border-color] duration-300 ease-out ${
+        solid
+          ? 'border-b border-line bg-bg supports-[backdrop-filter]:backdrop-blur-md'
           : 'border-b border-transparent bg-transparent'
       }`}
     >
-      <div className="container-luna flex items-center gap-6 py-4 lg:py-5">
+      <div
+        className={`container-luna flex items-center gap-3 transition-[height] duration-300 ease-out xl:gap-4 ${
+          solid ? 'h-[60px] lg:h-16' : 'h-[72px] lg:h-[88px]'
+        }`}
+      >
         <Logo className="shrink-0" />
 
-        <nav aria-label="Основная навигация" className="mx-auto hidden lg:block">
-          <ul className="flex items-center gap-4 xl:gap-7">
+        <nav aria-label="Основная навигация" className="hidden lg:block">
+          <ul className="flex items-center gap-3 xl:gap-4">
             {mainNav.map((item) => (
               <li key={item.href}>
                 <Link href={item.href} className={navLinkClasses}>
@@ -69,47 +78,37 @@ export function Header() {
           </ul>
         </nav>
 
-        {/* Контакты и кнопка, как в макете: справа столбиком */}
-        <div className="ml-auto hidden shrink-0 flex-col items-end gap-2.5 lg:flex">
-          <div className="hidden items-start gap-6 xl:flex">
-            <a
-              href={contacts.phone.href}
-              className="inline-flex items-center gap-2 font-sans text-[15px] font-semibold text-text transition-colors hover:text-green"
-            >
-              <Phone size={15} className="text-green" aria-hidden />
-              {contacts.phone.display}
-            </a>
+        {/* Телефон, адрес и кнопка — той же строкой, кнопка у правого края */}
+        <div className="ml-auto hidden shrink-0 items-center gap-3 lg:flex xl:gap-4">
+          <a
+            href={contacts.phone.href}
+            className="inline-flex items-center gap-2 whitespace-nowrap font-sans text-[13px] font-semibold text-text transition-colors hover:text-green"
+          >
+            <Phone size={14} className="shrink-0 text-muted" aria-hidden />
+            {contacts.phone.display}
+          </a>
 
-            <span className="inline-flex max-w-[240px] items-start gap-2 font-sans text-caption text-muted">
-              <MapPin size={15} className="mt-0.5 shrink-0 text-green" aria-hidden />
-              <span>
-                {contacts.address.street}
-                <br />
-                {contacts.address.area}, {contacts.address.locality}
-              </span>
-            </span>
-          </div>
+          {/* Полный адрес живёт в футере и на /kontakty — здесь только улица.
+              На 1024 не помещается и уходит совсем */}
+          <span className="hidden items-center gap-2 whitespace-nowrap font-sans text-[13px] text-text xl:inline-flex">
+            <MapPin size={14} className="shrink-0 text-muted" aria-hidden />
+            {contacts.address.street}
+          </span>
 
-          <div className="flex items-center gap-2">
-            {/* До xl телефон сжимается до иконки — иначе кнопка не влезает */}
-            <a
-              href={contacts.phone.href}
-              aria-label={`${ui.callAria}: ${contacts.phone.display}`}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-btn border border-line text-green transition-colors hover:border-green xl:hidden"
-            >
-              <Phone size={18} aria-hidden />
-            </a>
-            <Button href={headerCta.href} variant="primary" className="shrink-0">
-              {headerCta.label}
-            </Button>
-          </div>
+          <Button
+            href={headerCta.href}
+            variant="primary"
+            className="shrink-0 !px-4 xl:!px-5"
+          >
+            {headerCta.label}
+          </Button>
         </div>
 
-        {/* Мобильная часть */}
+        {/* 768 и ниже: логотип, телефон-иконка, бургер */}
         <div className="ml-auto flex items-center gap-1 lg:hidden">
           <a
             href={contacts.phone.href}
-            aria-label={ui.callAria}
+            aria-label={`${ui.callAria}: ${contacts.phone.display}`}
             className="inline-flex h-11 w-11 items-center justify-center rounded-btn text-green transition-colors hover:bg-panel"
           >
             <Phone size={20} aria-hidden />
@@ -130,13 +129,13 @@ export function Header() {
       {open ? (
         <div
           id="mobile-menu"
-          className="max-h-[calc(100dvh-72px)] overflow-y-auto border-t border-line bg-bg lg:hidden"
+          className="max-h-[calc(100dvh-60px)] overflow-y-auto border-t border-line bg-bg lg:hidden"
         >
           <div className="container-luna py-6">
             <nav aria-label="Мобильная навигация">
               <ul className="flex flex-col">
                 {mainNav.map((item) => (
-                  <li key={item.href} className="border-b border-line/70">
+                  <li key={item.href} className="border-b border-line">
                     <Link
                       href={item.href}
                       className="block py-3.5 font-sans text-[15px] font-medium uppercase tracking-[0.06em] text-text transition-colors hover:text-green"

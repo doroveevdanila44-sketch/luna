@@ -13,7 +13,8 @@
   --text: #edefe9;
   --muted: #8e938a;
 
-  --header-h: 84px;
+  /* высота шапки в сжатом виде — под неё уводятся якоря */
+  --header-h: 72px;
 }
 
 @layer base {
@@ -92,6 +93,26 @@
     transform: none;
   }
 
+  /*
+    Граница карточки при наведении — --green на 50% прозрачности.
+    Модификатором Tailwind (border-green/50) это не выразить: токены
+    хранятся готовым цветом внутри var(), а не каналами, и правило
+    молча не генерируется. color-mix сохраняет единственный источник правды.
+  */
+  .hover-border-green:hover,
+  .group:hover .group-hover-border-green {
+    border-color: color-mix(in srgb, var(--green) 50%, transparent);
+  }
+
+  /*
+    Короткая подсветка карточки направления после клика по столбику в hero.
+    Класс вешается и снимается императивно, поэтому живёт здесь, а не в JSX.
+  */
+  .is-highlighted {
+    border-color: var(--green) !important;
+    box-shadow: 0 0 0 1px var(--green);
+  }
+
   /* Горизонтальная лента без видимой полосы прокрутки (отзывы на мобиле) */
   .no-scrollbar {
     -ms-overflow-style: none;
@@ -120,5 +141,17 @@
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  /*
+    Гасим всю систему hover разом: Tailwind масштабирует через --tw-scale-*,
+    поэтому сброс переменных в интерактивных состояниях снимает scale
+    везде — дублировать motion-reduce: на каждом элементе не нужно.
+  */
+  *:hover,
+  *:active,
+  *:focus-visible {
+    --tw-scale-x: 1 !important;
+    --tw-scale-y: 1 !important;
   }
 }

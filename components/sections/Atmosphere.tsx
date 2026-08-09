@@ -32,7 +32,7 @@ export function Atmosphere() {
                 alt={item.alt}
                 fill
                 sizes="(min-width: 1280px) 420px, (min-width: 768px) 33vw, 50vw"
-                className="object-cover transition-transform duration-500 ease-out hover:scale-[1.04] motion-reduce:transition-none motion-reduce:hover:scale-100"
+                className="object-cover transition-transform duration-[400ms] ease-out hover:scale-[1.06]"
                 style={{ objectPosition: item.position ?? 'center' }}
               />
             </Reveal>

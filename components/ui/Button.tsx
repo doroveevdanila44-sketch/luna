@@ -22,10 +22,12 @@ type Props = CommonProps & {
   ariaLabel?: string
 }
 
+// docs/DESIGN.md: наведение 1.03, нажатие 1.05 — под пальцем кнопка
+// становится БОЛЬШЕ. prefers-reduced-motion гасит оба состояния в globals.css.
 const base =
   'inline-flex items-center justify-center gap-3 rounded-btn font-sans font-semibold uppercase text-btn ' +
   'transition-[transform,background-color,border-color,color] duration-200 ease-out ' +
-  'motion-reduce:transition-none hover:scale-[1.03] active:scale-[0.99] motion-reduce:hover:scale-100'
+  'hover:scale-[1.03] active:scale-[1.05]'
 
 const variants: Record<ButtonVariant, string> = {
   primary: 'bg-green text-bg hover:bg-green-dim',

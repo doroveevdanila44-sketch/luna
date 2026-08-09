@@ -25,3 +25,16 @@ export const reviews: readonly Review[] = [
   { id: 'r3', author: 'TODO', date: '', dateLabel: 'TODO', rating: 5, text: 'TODO' },
   { id: 'r4', author: 'TODO', date: '', dateLabel: 'TODO', rating: 5, text: 'TODO' },
 ]
+
+/** Заглушка — это ещё не отзыв: на проде «TODO» выглядит недоделкой */
+function isPublished(review: Review): boolean {
+  const text = review.text.trim()
+  return text.length > 0 && text.toUpperCase() !== 'TODO'
+}
+
+/**
+ * Секция отзывов рендерится только из этого массива. Пока он пуст,
+ * секции на странице нет вовсе; как только записи выше заполнятся
+ * реальными текстами, секция появится сама — править код не нужно.
+ */
+export const publishedReviews: readonly Review[] = reviews.filter(isPublished)

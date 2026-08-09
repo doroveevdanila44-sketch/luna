@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 type Props = {
   children: ReactNode
   href?: string
+  id?: string
   /** Подсвеченная карточка — «Популярный» тариф */
   highlighted?: boolean
   /** Отключить hover-эффект (карточки без интерактива) */
@@ -21,20 +22,22 @@ type Props = {
 export function Card({
   children,
   href,
+  id,
   highlighted = false,
   interactive = true,
   direction = 'col',
   className = '',
 }: Props) {
   const classes = [
-    'relative flex overflow-hidden rounded-card border bg-panel',
+    // group нужен всегда: по нему фотография внутри карточки ловит
+    // group-hover и растёт вместе с ней (docs/DESIGN.md)
+    'group relative flex overflow-hidden rounded-card border bg-panel',
     direction === 'row' ? 'flex-row' : 'flex-col',
     highlighted ? 'border-green' : 'border-line',
     interactive
-      ? 'transition-[transform,border-color] duration-300 ease-out ' +
-        'hover:scale-[1.02] hover:border-green/50 ' +
-        'motion-reduce:transition-none motion-reduce:hover:scale-100'
-      : '',
+      ? 'transition-[transform,border-color,box-shadow] duration-300 ease-out ' +
+        'hover:scale-[1.02] hover-border-green'
+      : 'transition-[border-color,box-shadow] duration-300 ease-out',
     className,
   ]
     .filter(Boolean)
@@ -42,11 +45,15 @@ export function Card({
 
   if (href) {
     return (
-      <Link href={href} className={`${classes} focus-visible:border-green`}>
+      <Link id={id} href={href} className={`${classes} focus-visible:border-green`}>
         {children}
       </Link>
     )
   }
 
-  return <div className={classes}>{children}</div>
+  return (
+    <div id={id} className={classes}>
+      {children}
+    </div>
+  )
 }

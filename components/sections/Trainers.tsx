@@ -36,7 +36,7 @@ export function Trainers() {
                     <UserRound
                       size={52}
                       strokeWidth={1.1}
-                      className="text-green"
+                      className="text-green transition-transform duration-[400ms] ease-out group-hover:scale-[1.06]"
                       aria-hidden
                     />
                     <span className="max-w-[13ch] font-sans text-[11px] leading-tight text-muted">

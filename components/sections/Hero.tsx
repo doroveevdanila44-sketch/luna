@@ -1,5 +1,6 @@
 import Image from 'next/image'
 
+import { HeroMarks } from '@/components/sections/HeroMarks'
 import { Button } from '@/components/ui/Button'
 import { contacts } from '@/data/contacts'
 import { hero } from '@/data/home'
@@ -8,18 +9,27 @@ export function Hero() {
   return (
     <section className="relative isolate flex min-h-[600px] items-end overflow-hidden pt-[104px] sm:min-h-[660px] lg:min-h-[740px] lg:pt-[136px]">
       {/*
-        Фото 2.5:1 — луна слева, зал справа.
-        На телефоне кадр смещён к луне: тёмная половина держит текст,
-        на десктопе видно сцену целиком.
+        Фото 16:9 — крупная луна слева, зал справа.
+        От 1280px кадр виден по всей ширине и позиция по X роли не играет;
+        ниже контейнер уже кадра, поэтому смещаем окно влево — иначе луна,
+        главный образ бренда, уезжает за левый край.
+
+        quality 78, а не 85: кадр лежит под вуалью и почти монохромный,
+        артефактов не видно, а это самый первый байт страницы — LCP.
+
+        sizes на телефоне занижены намеренно. Кадр 16:9 растягивается по
+        высоте экрана, и «честный» размер потребовал бы вдвое больше пикселей,
+        чем есть смысл грузить по мобильной сети. Под вуалью разница не видна,
+        а LCP держится.
       */}
       <Image
         src="/images/hero.jpg"
         alt={hero.imageAlt}
         fill
         priority
-        sizes="100vw"
-        quality={85}
-        className="-z-20 object-cover object-[40%_center] sm:object-[34%_center] lg:object-center"
+        sizes="(max-width: 640px) 80vw, 100vw"
+        quality={78}
+        className="-z-20 object-cover object-[12%_center] sm:object-[18%_center] lg:object-[25%_center] xl:object-center"
       />
 
       {/*
@@ -29,11 +39,11 @@ export function Hero() {
       */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,var(--bg)_0%,rgba(11,12,10,0.62)_16%,rgba(11,12,10,0.5)_44%,rgba(11,12,10,0.78)_80%,var(--bg)_100%)] sm:bg-[linear-gradient(to_bottom,var(--bg)_0%,rgba(11,12,10,0.55)_18%,rgba(11,12,10,0)_46%,rgba(11,12,10,0.72)_82%,var(--bg)_100%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(11,12,10,0.86)_0%,rgba(11,12,10,0.55)_18%,rgba(11,12,10,0.42)_46%,rgba(11,12,10,0.7)_80%,var(--bg)_100%)] sm:bg-[linear-gradient(to_bottom,rgba(11,12,10,0.82)_0%,rgba(11,12,10,0.3)_24%,rgba(11,12,10,0.05)_52%,rgba(11,12,10,0.62)_84%,var(--bg)_100%)]"
       />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 hidden bg-[linear-gradient(to_right,var(--bg)_0%,rgba(11,12,10,0.78)_34%,rgba(11,12,10,0.15)_68%,rgba(11,12,10,0)_100%)] sm:block"
+        className="absolute inset-0 -z-10 hidden bg-[linear-gradient(to_right,rgba(11,12,10,0.55)_0%,rgba(11,12,10,0.42)_38%,rgba(11,12,10,0.15)_66%,rgba(11,12,10,0)_88%)] sm:block"
       />
 
       <div className="container-luna relative w-full pb-20 lg:pb-28">
@@ -50,7 +60,7 @@ export function Hero() {
               <span className="text-green">{hero.titleLine2}</span>
             </h1>
 
-            <p className="mt-6 max-w-[46ch] font-sans text-body text-text/80 sm:text-lead">
+            <p className="mt-6 max-w-[46ch] font-sans text-body text-text sm:text-lead">
               {hero.lead}
             </p>
 
@@ -64,19 +74,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Столбик справа, как в макете */}
-          <ul className="hidden shrink-0 flex-col gap-1 pb-2 text-right xl:flex">
-            {hero.marks.map((mark, index) => (
-              <li
-                key={mark}
-                className={`border-l-2 py-1.5 pl-4 font-sans text-[11px] font-semibold uppercase tracking-[0.16em] ${
-                  index === 1 ? 'border-green text-text' : 'border-line text-muted'
-                }`}
-              >
-                {mark}
-              </li>
-            ))}
-          </ul>
+          {/* Столбик справа, как в макете, — но кликабельный */}
+          <HeroMarks />
         </div>
       </div>
     </section>

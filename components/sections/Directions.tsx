@@ -49,14 +49,19 @@ export function Directions() {
 
             return (
               <Reveal as="li" key={direction.id} delay={index * 70} className="flex">
-                <Card href={direction.href} className="w-full">
+                {/* id нужен столбику в hero: по клику он подсвечивает карточку */}
+                <Card
+                  id={`direction-${direction.id}`}
+                  href={direction.href}
+                  className="w-full"
+                >
                   <div className="relative aspect-[16/10] w-full overflow-hidden sm:aspect-[4/3]">
                     <Image
                       src={direction.image}
                       alt=""
                       fill
                       sizes="(min-width: 1280px) 300px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                      className={`object-cover ${positions[direction.id] ?? 'object-center'}`}
+                      className={`object-cover transition-transform duration-[400ms] ease-out group-hover:scale-[1.06] ${positions[direction.id] ?? 'object-center'}`}
                     />
                     <span
                       aria-hidden

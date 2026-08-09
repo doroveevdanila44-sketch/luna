@@ -17,7 +17,7 @@ export function MapCard({ className = '' }: Props) {
       target="_blank"
       rel="noreferrer noopener"
       aria-label={ui.mapAria}
-      className={`group relative block overflow-hidden rounded-card border border-line bg-panel-2 transition-colors hover:border-green/50 ${className}`}
+      className={`group relative block overflow-hidden rounded-card border border-line bg-panel-2 transition-colors hover-border-green ${className}`}
     >
       <svg
         viewBox="0 0 320 190"

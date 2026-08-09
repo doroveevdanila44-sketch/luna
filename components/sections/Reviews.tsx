@@ -9,7 +9,7 @@ import { SectionTitle } from '@/components/ui/SectionTitle'
 import { contacts } from '@/data/contacts'
 import { sectionLinks, sectionTitles, ui } from '@/data/home'
 import { anchors } from '@/data/nav'
-import { reviews, type Review } from '@/data/reviews'
+import { publishedReviews, type Review } from '@/data/reviews'
 import { useVisibleCount, type VisibleCounts } from '@/hooks/useVisibleCount'
 
 /**
@@ -17,7 +17,7 @@ import { useVisibleCount, type VisibleCounts } from '@/hooks/useVisibleCount'
  * остальные листаются свайпом (поэтому на base показываем весь массив).
  * Срез — через .slice(), не через display:none. docs/CONTENT.md
  */
-const COUNTS: VisibleCounts = { base: reviews.length, md: 2, lg: 3 }
+const COUNTS: VisibleCounts = { base: Math.max(publishedReviews.length, 1), md: 2, lg: 3 }
 
 const useIsomorphicLayoutEffect =
   typeof window === 'undefined' ? useEffect : useLayoutEffect
@@ -44,7 +44,7 @@ function ReviewCard({ review }: { review: Review }) {
   }, [expanded])
 
   return (
-    <Card interactive={false} className="h-full w-full">
+    <Card className="h-full w-full">
       <div className="flex h-full flex-col p-5 lg:p-6">
         <div className="flex items-baseline justify-between gap-4">
           <h3 className="font-display text-h3 font-bold uppercase text-text">
@@ -99,7 +99,17 @@ function ReviewCard({ review }: { review: Review }) {
   )
 }
 
+/**
+ * Пока в /data/reviews.ts нет ни одного заполненного отзыва, секции на
+ * странице нет вовсе: «TODO / TODO / TODO» на проде читается как недоделка.
+ * Появится сама, когда массив заполнится — правок в коде не потребует.
+ */
 export function Reviews() {
+  if (publishedReviews.length === 0) return null
+  return <ReviewsSection />
+}
+
+function ReviewsSection() {
   const visible = useVisibleCount(COUNTS)
 
   const ratingAside = (
@@ -122,7 +132,7 @@ export function Reviews() {
         />
 
         <ul className="no-scrollbar -mx-5 mt-8 flex snap-x snap-mandatory items-stretch gap-4 overflow-x-auto px-5 pb-1 sm:mx-0 sm:px-0 md:grid md:grid-cols-2 md:overflow-visible lg:mt-10 lg:grid-cols-3">
-          {reviews.slice(0, visible).map((review, index) => (
+          {publishedReviews.slice(0, visible).map((review, index) => (
             <Reveal
               as="li"
               key={review.id}

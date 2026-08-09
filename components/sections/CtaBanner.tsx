@@ -14,34 +14,43 @@ export function CtaBanner() {
   return (
     <section className="section pt-0 lg:pt-0">
       <div className="container-luna">
-        <Reveal className="relative isolate overflow-hidden rounded-block border border-line bg-panel-2">
-          <Image
-            src="/images/cta-banner.jpg"
-            alt={ctaBanner.imageAlt}
-            fill
-            sizes="(min-width: 1280px) 1232px, 100vw"
-            className="-z-10 object-cover object-[72%_center] sm:object-center"
-          />
+        {/*
+          Баннер во всю ширину контейнера растёт на 1.01, а не на 1.02:
+          при 1.02 он вылезает за паддинг и на 1280px даёт горизонтальную
+          прокрутку. Фотография внутри растёт по общему правилу — 1.06.
+        */}
+        {/* Появление и hover — на разных элементах: у .reveal свой transition
+            на transform, и общий элемент их бы столкнул */}
+        <Reveal>
+          <div className="group relative isolate overflow-hidden rounded-block border border-line bg-panel-2 transition-[transform,border-color] duration-300 ease-out hover:scale-[1.01] hover-border-green">
+            <Image
+              src="/images/cta-banner.jpg"
+              alt={ctaBanner.imageAlt}
+              fill
+              sizes="(min-width: 1280px) 1232px, 100vw"
+              className="-z-10 object-cover object-[72%_center] transition-transform duration-[400ms] ease-out group-hover:scale-[1.06] sm:object-center"
+            />
 
-          <div
-            aria-hidden
-            className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(11,12,10,0.92)_0%,rgba(11,12,10,0.72)_46%,rgba(11,12,10,0.25)_100%)] sm:bg-[linear-gradient(to_right,var(--bg)_0%,rgba(11,12,10,0.86)_34%,rgba(11,12,10,0.35)_62%,rgba(11,12,10,0)_100%)]"
-          />
+            <div
+              aria-hidden
+              className="absolute inset-0 -z-10 bg-[linear-gradient(to_bottom,rgba(11,12,10,0.92)_0%,rgba(11,12,10,0.72)_46%,rgba(11,12,10,0.25)_100%)] sm:bg-[linear-gradient(to_right,var(--bg)_0%,rgba(11,12,10,0.86)_34%,rgba(11,12,10,0.35)_62%,rgba(11,12,10,0)_100%)]"
+            />
 
-          <div className="relative flex min-h-[420px] flex-col justify-start p-6 sm:min-h-[300px] sm:justify-center sm:p-10 lg:min-h-[360px] lg:p-14">
-            {/* Три строки заданы явно — сама строка ломаться не должна */}
-            <h2 className="font-display text-[clamp(16px,3vw,34px)] font-bold uppercase leading-[1.22] text-text sm:whitespace-nowrap">
-              {ctaBanner.titleLine1}
-              <br />
-              {ctaBanner.titleLine2}
-              <br />
-              <span className="text-green">{ctaBanner.titleLine3}</span>
-            </h2>
+            <div className="relative flex min-h-[420px] flex-col justify-start p-6 sm:min-h-[300px] sm:justify-center sm:p-10 lg:min-h-[360px] lg:p-14">
+              {/* Три строки заданы явно — сама строка ломаться не должна */}
+              <h2 className="font-display text-[clamp(16px,3vw,34px)] font-bold uppercase leading-[1.22] text-text sm:whitespace-nowrap">
+                {ctaBanner.titleLine1}
+                <br />
+                {ctaBanner.titleLine2}
+                <br />
+                <span className="text-green">{ctaBanner.titleLine3}</span>
+              </h2>
 
-            <div className="mt-8">
-              <Button href={contacts.phone.href} variant="primary" size="lg" withArrow>
-                {ctaBanner.button}
-              </Button>
+              <div className="mt-8">
+                <Button href={contacts.phone.href} variant="primary" size="lg" withArrow>
+                  {ctaBanner.button}
+                </Button>
+              </div>
             </div>
           </div>
         </Reveal>

@@ -17,8 +17,10 @@ const icons: Record<BenefitIcon, LucideIcon> = {
  * 1440/1024 — 4 в ряд · 768 — 2×2 · 390 — 4 полосы во всю ширину
  * (иконка слева, текст справа), не квадратные плитки. docs/CONTENT.md
  *
- * Разделители — просветы сетки (gap-px) на фоне --line: работают
- * одинаково при 1, 2 и 4 колонках без nth-child-правил.
+ * Разделители — просветы сетки (gap-px) на фоне --line. overflow-hidden на
+ * контейнере снят намеренно: он срезал бы рост ячейки при наведении сверху и
+ * снизу, и hover читался бы только по горизонтали. Поэтому же ячейки скруглены
+ * сами: без обрезки их прямые углы вылезали бы за скругление контейнера.
  */
 export function Benefits() {
   return (
@@ -27,19 +29,19 @@ export function Benefits() {
         <h2 className="sr-only">{sectionTitles.about}</h2>
 
         <Reveal>
-          <ul className="grid gap-px overflow-hidden rounded-block border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid gap-px rounded-block border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {benefits.map((benefit) => {
               const Icon = icons[benefit.icon]
 
               return (
                 <li
                   key={benefit.id}
-                  className="flex items-start gap-4 bg-panel p-5 sm:flex-col sm:gap-0 sm:p-6 lg:p-7"
+                  className="group relative flex items-start gap-4 rounded-[13px] border border-transparent bg-panel p-5 transition-[transform,border-color] duration-300 ease-out hover:z-10 hover:scale-[1.02] hover-border-green sm:flex-col sm:gap-0 sm:p-6 lg:p-7"
                 >
                   <Icon
                     size={24}
                     strokeWidth={1.5}
-                    className="mt-0.5 shrink-0 text-green sm:mt-0"
+                    className="mt-0.5 shrink-0 text-green transition-transform duration-300 ease-out group-hover:scale-110 sm:mt-0"
                     aria-hidden
                   />
 
