@@ -17,11 +17,18 @@ const icons: Record<BenefitIcon, LucideIcon> = {
  * 1440/1024 — 4 в ряд · 768 — 2×2 · 390 — 4 полосы во всю ширину
  * (иконка слева, текст справа), не квадратные плитки. docs/CONTENT.md
  *
- * Разделители — просветы сетки (gap-px) на фоне --line. overflow-hidden на
- * контейнере снят намеренно: он срезал бы рост ячейки при наведении сверху и
- * снизу, и hover читался бы только по горизонтали. Поэтому же ячейки скруглены
- * сами: без обрезки их прямые углы вылезали бы за скругление контейнера.
+ * Пункты — блоки на общем фоне, а не отдельные карточки: своего фона, рамки,
+ * скругления и тени у них нет. Делит их только вертикальная линия --line
+ * (на телефоне колонка одна — там делит воздух).
+ *
+ * При наведении растут заголовок и иконка, сам блок не трогается — поэтому
+ * контейнер снова может обрезать содержимое по скруглению.
  */
+
+// Линия слева: на двух колонках — у правой, на четырёх — у всех, кроме первой
+const dividerClasses =
+  'sm:[&:nth-child(even)]:border-l lg:[&:not(:first-child)]:border-l border-line'
+
 export function Benefits() {
   return (
     <section id={anchors.about} className="relative z-10 -mt-10 lg:-mt-16">
@@ -29,24 +36,24 @@ export function Benefits() {
         <h2 className="sr-only">{sectionTitles.about}</h2>
 
         <Reveal>
-          <ul className="grid gap-px rounded-block border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid overflow-hidden rounded-block border border-line bg-panel sm:grid-cols-2 lg:grid-cols-4">
             {benefits.map((benefit) => {
               const Icon = icons[benefit.icon]
 
               return (
                 <li
                   key={benefit.id}
-                  className="group relative flex items-start gap-4 rounded-[13px] border border-transparent bg-panel p-5 transition-[transform,border-color] duration-300 ease-out hover:z-10 hover:scale-[1.02] hover-border-green sm:flex-col sm:gap-0 sm:p-6 lg:p-7"
+                  className={`group flex items-start gap-4 p-5 sm:flex-col sm:gap-0 sm:p-6 lg:p-7 ${dividerClasses}`}
                 >
                   <Icon
                     size={24}
                     strokeWidth={1.5}
-                    className="mt-0.5 shrink-0 text-green transition-transform duration-300 ease-out group-hover:scale-110 sm:mt-0"
+                    className="mt-0.5 shrink-0 origin-left text-green transition-transform duration-300 ease-out group-hover:scale-[1.06] sm:mt-0"
                     aria-hidden
                   />
 
                   <div className="sm:mt-4">
-                    <h3 className="font-display text-h3 font-bold uppercase leading-snug text-text">
+                    <h3 className="origin-left font-display text-h3 font-bold uppercase leading-snug text-text transition-transform duration-300 ease-out group-hover:scale-[1.06]">
                       {benefit.title}
                     </h3>
                     <p className="mt-2 font-sans text-caption text-muted">

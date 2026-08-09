@@ -11,6 +11,9 @@ import { anchors } from '@/data/nav'
  * элемента через flex-grow, поэтому лента корректна при любом количестве
  * фото от 1 до 5). Мобайл — две колонки; если фото нечётное число,
  * последнее занимает всю ширину. docs/CONTENT.md
+ *
+ * Единственная секция без hover: фотографии стоят неподвижно — ни зума,
+ * ни подсветки границ. Сознательное исключение из общего правила.
  */
 export function Atmosphere() {
   return (
@@ -32,7 +35,7 @@ export function Atmosphere() {
                 alt={item.alt}
                 fill
                 sizes="(min-width: 1280px) 420px, (min-width: 768px) 33vw, 50vw"
-                className="object-cover transition-transform duration-[400ms] ease-out hover:scale-[1.06]"
+                className="object-cover"
                 style={{ objectPosition: item.position ?? 'center' }}
               />
             </Reveal>

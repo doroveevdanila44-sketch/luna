@@ -36,7 +36,7 @@ export function Card({
     highlighted ? 'border-green' : 'border-line',
     interactive
       ? 'transition-[transform,border-color,box-shadow] duration-300 ease-out ' +
-        'hover:scale-[1.02] hover-border-green'
+        'hover:scale-[1.02] active:scale-[1.03] hover-border-green'
       : 'transition-[border-color,box-shadow] duration-300 ease-out',
     className,
   ]

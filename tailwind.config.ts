@@ -6,6 +6,12 @@ import type { Config } from 'tailwindcss'
  * сюда пробрасываются через var() — один источник правды.
  */
 const config: Config = {
+  // Все hover:-утилиты заворачиваются в @media (hover: hover). На тач-экранах
+  // hover эмулируется тапом и элемент залипает увеличенным до следующего
+  // касания — с этим флагом на телефоне и iPad такого состояния просто нет.
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     './app/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',

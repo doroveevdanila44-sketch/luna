@@ -71,7 +71,7 @@ export function HeroMarks() {
             onClick={() => goToDirection(mark.target)}
             onMouseEnter={() => setActive(index)}
             onFocus={() => setActive(index)}
-            className={`block w-full py-1.5 pl-4 text-right font-sans text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors duration-200 ${
+            className={`block w-full origin-right py-1.5 pl-4 text-right font-sans text-[11px] font-semibold uppercase tracking-[0.16em] transition-[transform,color] duration-300 ease-out hover:scale-[1.06] ${
               index === active ? 'text-text' : 'text-muted hover:text-text'
             }`}
           >

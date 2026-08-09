@@ -94,14 +94,31 @@
   }
 
   /*
-    Граница карточки при наведении — --green на 50% прозрачности.
-    Модификатором Tailwind (border-green/50) это не выразить: токены
-    хранятся готовым цветом внутри var(), а не каналами, и правило
-    молча не генерируется. color-mix сохраняет единственный источник правды.
+    Подсветка при наведении: зелёная граница плюс мягкое свечение.
+    Одно правило на все интерактивные поверхности — карточки, баннер, карта, —
+    чтобы одинаковый hover не переписывался в каждом компоненте заново.
+
+    Граница — --green на 50% прозрачности. Модификатором Tailwind
+    (border-green/50) это не выразить: токены хранятся готовым цветом внутри
+    var(), а не каналами, и правило молча не генерируется. color-mix
+    сохраняет единственный источник правды.
+
+    @media (hover: hover) — вручную, потому что флаг hoverOnlyWhenSupported
+    в tailwind.config накрывает только hover:-утилиты, а не свой CSS.
   */
-  .hover-border-green:hover,
-  .group:hover .group-hover-border-green {
-    border-color: color-mix(in srgb, var(--green) 50%, transparent);
+  @media (hover: hover) {
+    .hover-border-green:hover,
+    .group:hover .group-hover-border-green {
+      border-color: color-mix(in srgb, var(--green) 50%, transparent);
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--green) 20%, transparent),
+        0 10px 34px -14px color-mix(in srgb, var(--green) 55%, transparent);
+    }
+
+    /* Свечение для кнопок: рост в 1.04 сам по себе почти не читается */
+    .hover-glow:hover {
+      box-shadow: 0 10px 28px -10px color-mix(in srgb, var(--green) 60%, transparent);
+    }
   }
 
   /*
@@ -150,8 +167,11 @@
   */
   *:hover,
   *:active,
-  *:focus-visible {
+  *:focus-visible,
+  .group:hover * {
     --tw-scale-x: 1 !important;
     --tw-scale-y: 1 !important;
+    --tw-translate-x: 0 !important;
+    --tw-translate-y: 0 !important;
   }
 }

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-export type ButtonVariant = 'primary' | 'outline' | 'ghost'
+export type ButtonVariant = 'primary' | 'outline'
 export type ButtonSize = 'md' | 'lg'
 
 type CommonProps = {
@@ -22,17 +22,20 @@ type Props = CommonProps & {
   ariaLabel?: string
 }
 
-// docs/DESIGN.md: наведение 1.03, нажатие 1.05 — под пальцем кнопка
-// становится БОЛЬШЕ. prefers-reduced-motion гасит оба состояния в globals.css.
+// docs/DESIGN.md: реакция появляется при наведении, нажатие только добавляет.
+// Один рост в 1.04 на кнопке высотой 44px — это два пикселя, его не видно,
+// поэтому наведение ещё и подсвечивает: смена фона плюс свечение hover-glow.
+// prefers-reduced-motion гасит оба scale в globals.css, свечение остаётся.
 const base =
   'inline-flex items-center justify-center gap-3 rounded-btn font-sans font-semibold uppercase text-btn ' +
-  'transition-[transform,background-color,border-color,color] duration-200 ease-out ' +
-  'hover:scale-[1.03] active:scale-[1.05]'
+  'transition-[transform,background-color,border-color,color,box-shadow] duration-200 ease-out ' +
+  'hover-glow hover:scale-[1.04] active:scale-[1.06]'
 
 const variants: Record<ButtonVariant, string> = {
   primary: 'bg-green text-bg hover:bg-green-dim',
-  outline: 'border border-line text-text hover:border-green hover:text-green',
-  ghost: 'text-muted hover:text-green',
+  // bg-green/5 не использовать: модификатор прозрачности на var()-токене
+  // не генерирует правило (см. globals.css)
+  outline: 'border border-line text-text hover:border-green hover:bg-panel hover:text-green',
 }
 
 const sizes: Record<ButtonSize, string> = {

@@ -4,7 +4,7 @@
  *
  * Запуск: npm run assets
  */
-import { mkdir, readdir, stat, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, stat } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { homedir } from 'node:os'
 import sharp from 'sharp'
@@ -29,13 +29,14 @@ const MAP = [
   { match: 'атмосфера клуба 3', out: 'atmosphere-3', maxWidth: 1400 },
   { match: 'атмосфера клуба 4', out: 'atmosphere-4', maxWidth: 1400 },
   { match: 'начать сегодня', out: 'cta-banner', maxWidth: 2000 },
+  // Отдельный кадр баннера для телефона: гиря помещается целиком
+  { match: 'телефон гиря', out: 'cta-banner-mobile', maxWidth: 1100 },
 ]
 
 async function main() {
   await mkdir(OUT_DIR, { recursive: true })
 
   const files = await readdir(SRC_DIR)
-  const manifest = {}
 
   for (const rule of MAP) {
     const file = files.find(
@@ -68,7 +69,6 @@ async function main() {
 
     const before = (await stat(srcPath)).size
     const after = (await stat(jpgPath)).size
-    manifest[rule.out] = { width: jpgInfo.width, height: jpgInfo.height }
 
     console.log(
       `OK    ${file} → ${rule.out}.jpg  ` +
@@ -77,13 +77,6 @@ async function main() {
     )
   }
 
-  // Размеры нужны компонентам для next/image без layout shift.
-  await writeFile(
-    resolve('data/image-sizes.json'),
-    JSON.stringify(manifest, null, 2) + '\n',
-    'utf8',
-  )
-  console.log('\nЗаписан data/image-sizes.json')
 }
 
 main().catch((err) => {

@@ -69,8 +69,9 @@ export function Footer() {
             </nav>
           ))}
 
-          {/* Контакты */}
-          <div className="col-span-2 lg:col-span-3">
+          {/* Контакты. С 768px встают в один ряд с картой — иначе футер
+              на iPad вертикально не помещается в экран */}
+          <div className="col-span-2 md:col-span-1 lg:col-span-3">
             <h3 className="font-display text-[13px] font-bold uppercase tracking-[0.06em] text-text">
               {ui.contactsTitle}
             </h3>
@@ -113,8 +114,10 @@ export function Footer() {
           </div>
 
           {/* Карта */}
-          <div className="col-span-2 lg:col-span-2">
-            <MapCard className="aspect-[16/9] w-full lg:aspect-[4/3]" />
+          <div className="col-span-2 md:col-span-1 lg:col-span-2">
+            {/* Высота задана жёстко, а не пропорцией: на телефоне и iPad
+                карта во всю ширину контейнера растягивала футер на экран */}
+            <MapCard className="h-[180px] w-full md:h-[220px] lg:aspect-[4/3] lg:h-auto" />
             <p className="mt-3 font-sans text-caption text-muted">{contacts.payment}</p>
           </div>
         </div>
