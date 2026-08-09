@@ -23,7 +23,7 @@ const onest = Onest({
 
 export const metadata: Metadata = {
   title: {
-    default: `${contacts.name} — ${contacts.caption} в ${contacts.address.locality}`,
+    default: `${contacts.name} — ${contacts.caption} в ${contacts.address.localityIn}`,
     template: `%s — ${contacts.caption} «${contacts.name}»`,
   },
   description:

@@ -8,6 +8,8 @@ type Props = {
   highlighted?: boolean
   /** Отключить hover-эффект (карточки без интерактива) */
   interactive?: boolean
+  /** Направление раскладки внутри карточки */
+  direction?: 'col' | 'row'
   className?: string
 }
 
@@ -21,10 +23,12 @@ export function Card({
   href,
   highlighted = false,
   interactive = true,
+  direction = 'col',
   className = '',
 }: Props) {
   const classes = [
-    'relative flex flex-col overflow-hidden rounded-card border bg-panel',
+    'relative flex overflow-hidden rounded-card border bg-panel',
+    direction === 'row' ? 'flex-row' : 'flex-col',
     highlighted ? 'border-green' : 'border-line',
     interactive
       ? 'transition-[transform,border-color] duration-300 ease-out ' +

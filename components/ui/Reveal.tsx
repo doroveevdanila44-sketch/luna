@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 
 type Props = {
   children: ReactNode
@@ -9,6 +9,7 @@ type Props = {
   as?: 'div' | 'section' | 'li'
   className?: string
   id?: string
+  style?: CSSProperties
 }
 
 /**
@@ -16,7 +17,14 @@ type Props = {
  * Только IntersectionObserver, без библиотек анимации (CLAUDE.md).
  * prefers-reduced-motion гасится в globals.css.
  */
-export function Reveal({ children, delay = 0, as = 'div', className = '', id }: Props) {
+export function Reveal({
+  children,
+  delay = 0,
+  as = 'div',
+  className = '',
+  id,
+  style,
+}: Props) {
   const ref = useRef<HTMLElement | null>(null)
   const [visible, setVisible] = useState(false)
 
@@ -53,7 +61,7 @@ export function Reveal({ children, delay = 0, as = 'div', className = '', id }: 
       id={id}
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`reveal ${visible ? 'is-visible' : ''} ${className}`}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      style={delay ? { ...style, transitionDelay: `${delay}ms` } : style}
     >
       {children}
     </Tag>

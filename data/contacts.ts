@@ -17,6 +17,8 @@ export type Contacts = {
     readonly street: string
     readonly area: string
     readonly locality: string
+    /** Предложный падеж — для заголовков вида «клуб в …» */
+    readonly localityIn: string
     readonly postalCode: string
     /** Полная строка для JSON-LD и подписи под картой */
     readonly full: string
@@ -53,6 +55,7 @@ export const contacts: Contacts = {
     street: 'ул. Ларина, 22/6, 1 этаж',
     area: 'Северо-восток м-н',
     locality: 'Петропавловск-Камчатский',
+    localityIn: 'Петропавловске-Камчатском',
     postalCode: '683042',
     full: 'ул. Ларина, 22/6, 1 этаж, Северо-восток м-н, Петропавловск-Камчатский, 683042',
   },

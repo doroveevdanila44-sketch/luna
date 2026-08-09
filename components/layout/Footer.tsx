@@ -68,7 +68,7 @@ export function Footer() {
           ))}
 
           {/* Контакты */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <h3 className="font-display text-[13px] font-bold uppercase tracking-[0.06em] text-text">
               {ui.contactsTitle}
             </h3>
@@ -111,7 +111,7 @@ export function Footer() {
           </div>
 
           {/* Карта */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-2">
             <MapCard className="aspect-[16/9] w-full lg:aspect-[4/3]" />
             <p className="mt-3 font-sans text-caption text-muted">{contacts.payment}</p>
           </div>
