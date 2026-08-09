@@ -37,7 +37,7 @@ export function ComingSoon({ title, text }: Props) {
               <ArrowLeft
                 size={16}
                 aria-hidden
-                className="transition-transform duration-200 group-hover:-translate-x-1"
+                className="react nudge-x-back"
               />
               {ui.backHome}
             </Link>

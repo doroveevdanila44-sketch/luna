@@ -48,12 +48,12 @@ export function Benefits() {
                   <Icon
                     size={24}
                     strokeWidth={1.5}
-                    className="mt-0.5 shrink-0 origin-left text-green transition-transform duration-300 ease-out group-hover:scale-[1.06] sm:mt-0"
+                    className="react grow-text mt-0.5 shrink-0 origin-left text-green sm:mt-0"
                     aria-hidden
                   />
 
                   <div className="sm:mt-4">
-                    <h3 className="origin-left font-display text-h3 font-bold uppercase leading-snug text-text transition-transform duration-300 ease-out group-hover:scale-[1.06]">
+                    <h3 className="react grow-text origin-left font-display text-h3 font-bold uppercase leading-snug text-text">
                       {benefit.title}
                     </h3>
                     <p className="mt-2 font-sans text-caption text-muted">

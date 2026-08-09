@@ -30,7 +30,14 @@
     font-family: var(--font-onest), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* Серая подложка по касанию не нужна — отклик рисуем сами */
+    -webkit-tap-highlight-color: transparent;
   }
+
+  /*
+    touch-action намеренно нигде не переопределяется: вертикальное листание
+    страницы важнее любой анимации и должно работать как обычно.
+  */
 
   /* Видимый фокус на всех интерактивных элементах — docs/DESIGN.md, п.6 */
   :focus-visible {
@@ -93,32 +100,145 @@
     transform: none;
   }
 
-  /*
-    Подсветка при наведении: зелёная граница плюс мягкое свечение.
-    Одно правило на все интерактивные поверхности — карточки, баннер, карта, —
-    чтобы одинаковый hover не переписывался в каждом компоненте заново.
+  /* ======================================================================
+     СИСТЕМА ОТКЛИКА. Одно место на весь сайт.
 
-    Граница — --green на 50% прозрачности. Модификатором Tailwind
-    (border-green/50) это не выразить: токены хранятся готовым цветом внутри
-    var(), а не каналами, и правило молча не генерируется. color-mix
-    сохраняет единственный источник правды.
+     Масштаб задаётся обычным transform: scale(), а НЕ утилитами Tailwind.
+     Причина конкретная: Tailwind масштабирует через переменные --tw-scale-*,
+     и любое правило, сбросившее их, молча убивает наведение на всём сайте —
+     ровно это и произошло с блоком prefers-reduced-motion ниже.
+     Собственный transform подменить переменной невозможно.
 
-    @media (hover: hover) — вручную, потому что флаг hoverOnlyWhenSupported
-    в tailwind.config накрывает только hover:-утилиты, а не свой CSS.
-  */
+     Мышь → :hover. Тач-экран → :active: палец коснулся и ведёт — эффект есть,
+     отпустил — состояние снимается браузером само, ничего не залипает.
+     ====================================================================== */
+
+  .react {
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      border-color 250ms ease,
+      background-color 250ms ease,
+      color 250ms ease;
+  }
+
   @media (hover: hover) {
-    .hover-border-green:hover,
-    .group:hover .group-hover-border-green {
-      border-color: color-mix(in srgb, var(--green) 50%, transparent);
+    .grow-btn:hover {
+      transform: scale(1.05);
+    }
+    .grow-btn:active {
+      transform: scale(1.07);
+    }
+
+    .grow-card:hover {
+      transform: scale(1.04);
+    }
+    .grow-card:active {
+      transform: scale(1.05);
+    }
+
+    /* Широкий баннер во всю ширину контейнера: 1.04 вылезает за паддинг */
+    .grow-wide:hover {
+      transform: scale(1.012);
+    }
+
+    .grow-text:hover,
+    .group:hover .grow-text {
+      transform: scale(1.08);
+    }
+
+    .group:hover .grow-photo {
+      transform: scale(1.06);
+    }
+
+    .group:hover .nudge-x {
+      transform: translateX(4px);
+    }
+    .group:hover .nudge-x-back {
+      transform: translateX(-4px);
+    }
+
+    .glow:hover,
+    .group:hover .glow-in-group {
+      box-shadow: 0 10px 28px -10px color-mix(in srgb, var(--green) 60%, transparent);
+    }
+
+    .lit:hover,
+    .group:hover .lit-in-group {
+      border-color: var(--green);
       box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--green) 20%, transparent),
+        0 0 0 1px color-mix(in srgb, var(--green) 25%, transparent),
         0 10px 34px -14px color-mix(in srgb, var(--green) 55%, transparent);
     }
 
-    /* Свечение для кнопок: рост в 1.04 сам по себе почти не читается */
-    .hover-glow:hover {
+    /* Контурная кнопка: обводка и текст зеленеют, заливка чуть проявляется */
+    .lit-outline:hover {
+      border-color: var(--green);
+      background-color: var(--panel);
+      color: var(--green);
+    }
+
+    /* Круглая стрелка в тарифе: заливается зелёным целиком */
+    .fill-on-touch:hover {
+      border-color: var(--green);
+      background-color: var(--green);
+      color: var(--bg);
+    }
+  }
+
+  @media (hover: none) {
+    .grow-btn:active {
+      transform: scale(1.05);
+    }
+    .grow-card:active {
+      transform: scale(1.04);
+    }
+    .grow-wide:active {
+      transform: scale(1.012);
+    }
+    .grow-text:active,
+    .group:active .grow-text {
+      transform: scale(1.08);
+    }
+    .group:active .grow-photo {
+      transform: scale(1.06);
+    }
+    .group:active .nudge-x {
+      transform: translateX(4px);
+    }
+    .group:active .nudge-x-back {
+      transform: translateX(-4px);
+    }
+    .glow:active,
+    .group:active .glow-in-group {
       box-shadow: 0 10px 28px -10px color-mix(in srgb, var(--green) 60%, transparent);
     }
+    .lit:active,
+    .group:active .lit-in-group {
+      border-color: var(--green);
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--green) 25%, transparent),
+        0 10px 34px -14px color-mix(in srgb, var(--green) 55%, transparent);
+    }
+    .lit-outline:active {
+      border-color: var(--green);
+      background-color: var(--panel);
+      color: var(--green);
+    }
+    .fill-on-touch:active {
+      border-color: var(--green);
+      background-color: var(--green);
+      color: var(--bg);
+    }
+  }
+
+  /*
+    Граница выделенного тарифа в покое — приглушённый зелёный. Полный --green
+    остаётся на наведение, иначе карточка выглядит уже подсвеченной,
+    а наведение делает её тусклее, чем она была.
+  */
+  .border-green-soft {
+    border-color: color-mix(in srgb, var(--green) 40%, transparent);
   }
 
   /*
@@ -161,17 +281,12 @@
   }
 
   /*
-    Гасим всю систему hover разом: Tailwind масштабирует через --tw-scale-*,
-    поэтому сброс переменных в интерактивных состояниях снимает scale
-    везде — дублировать motion-reduce: на каждом элементе не нужно.
+    Здесь раньше стоял сброс --tw-scale-* с !important. Он глушил не анимацию,
+    а САМО состояние: у всех, у кого в системе включено «Уменьшение движения»,
+    наведение по всему сайту не давало ничего. Вернуть нельзя.
+
+    Правильное поведение уже обеспечено правилом выше: transition-duration
+    обнулён, поэтому состояния переключаются мгновенно, без движения.
+    Отклик при этом остаётся видимым.
   */
-  *:hover,
-  *:active,
-  *:focus-visible,
-  .group:hover * {
-    --tw-scale-x: 1 !important;
-    --tw-scale-y: 1 !important;
-    --tw-translate-x: 0 !important;
-    --tw-translate-y: 0 !important;
-  }
 }

@@ -26,6 +26,15 @@ export function Header() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Safari на iOS применяет :active к произвольным элементам только если у
+  // документа есть хоть один обработчик касания. Пустой passive-слушатель
+  // включает отклик по касанию и ничего не перехватывает — скролл не страдает.
+  useEffect(() => {
+    const noop = () => {}
+    document.addEventListener('touchstart', noop, { passive: true })
+    return () => document.removeEventListener('touchstart', noop)
+  }, [])
+
   // Меню закрывается при переходе и не даёт скроллить фон
   useEffect(() => setOpen(false), [pathname])
 

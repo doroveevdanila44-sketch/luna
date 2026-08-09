@@ -54,13 +54,13 @@ export function CtaBanner() {
               Растёт на 1.01, а не на 1.02: при 1.02 баннер вылезает за паддинг
               контейнера и на 1280px даёт горизонтальную прокрутку.
             */
-            <div className="group relative isolate overflow-hidden rounded-block border border-line bg-panel-2 transition-[transform,border-color,box-shadow] duration-300 ease-out hover:scale-[1.01] hover-border-green">
+            <div className="group react grow-wide lit relative isolate overflow-hidden rounded-block border border-line bg-panel-2">
               <Image
                 src="/images/cta-banner.jpg"
                 alt={ctaBanner.imageAlt}
                 fill
                 sizes="(min-width: 1280px) 1232px, 100vw"
-                className="-z-10 object-cover object-center transition-transform duration-[400ms] ease-out group-hover:scale-[1.06]"
+                className="react grow-photo -z-10 object-cover object-center"
               />
 
               <div

@@ -22,20 +22,19 @@ type Props = CommonProps & {
   ariaLabel?: string
 }
 
-// docs/DESIGN.md: реакция появляется при наведении, нажатие только добавляет.
-// Один рост в 1.04 на кнопке высотой 44px — это два пикселя, его не видно,
-// поэтому наведение ещё и подсвечивает: смена фона плюс свечение hover-glow.
-// prefers-reduced-motion гасит оба scale в globals.css, свечение остаётся.
+// Отклик описан классами react/grow-btn/glow из globals.css: они работают
+// и на мыши (:hover), и на тач-экране (:active).
 const base =
-  'inline-flex items-center justify-center gap-3 rounded-btn font-sans font-semibold uppercase text-btn ' +
-  'transition-[transform,background-color,border-color,color,box-shadow] duration-200 ease-out ' +
-  'hover-glow hover:scale-[1.04] active:scale-[1.06]'
+  'react grow-btn glow inline-flex items-center justify-center gap-3 rounded-btn ' +
+  'font-sans font-semibold uppercase text-btn'
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-green text-bg hover:bg-green-dim',
+  // Заливка всегда --green: затемнение в --green-dim делало кнопку грязной.
+  // Весь отклик — рост и свечение наружу.
+  primary: 'bg-green text-bg',
   // bg-green/5 не использовать: модификатор прозрачности на var()-токене
   // не генерирует правило (см. globals.css)
-  outline: 'border border-line text-text hover:border-green hover:bg-panel hover:text-green',
+  outline: 'lit-outline border border-line text-text',
 }
 
 const sizes: Record<ButtonSize, string> = {

@@ -31,7 +31,7 @@ function ArrowLink({ link }: { link: SectionLink }) {
         size={16}
         strokeWidth={2}
         aria-hidden
-        className="transition-transform duration-200 group-hover:translate-x-1"
+        className="react nudge-x"
       />
     </>
   )

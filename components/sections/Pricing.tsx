@@ -26,7 +26,7 @@ export function Pricing() {
                 иначе карточка при наведении растёт, а «Популярный» остаётся
                 на месте и отрывается от неё.
               */}
-              <div className="group relative flex w-full pt-3 transition-transform duration-300 ease-out hover:scale-[1.02]">
+              <div className="group react grow-card relative flex w-full pt-3">
                 {plan.badge ? (
                   <span className="absolute left-1/2 top-0 z-10 -translate-x-1/2 rounded-btn bg-green px-3 py-1 font-sans text-[10px] font-semibold uppercase tracking-[0.14em] text-bg">
                     {plan.badge}
@@ -36,7 +36,7 @@ export function Pricing() {
                 <Card
                   highlighted={Boolean(plan.badge)}
                   interactive={false}
-                  className="w-full group-hover-border-green"
+                  className="w-full lit-in-group"
                 >
                   <div className="flex flex-1 flex-col p-5 lg:p-7">
                     <h3 className="font-display text-[clamp(15px,1.6vw,20px)] font-bold uppercase tracking-[0.02em] text-text">
@@ -63,7 +63,7 @@ export function Pricing() {
                       <a
                         href={contacts.phone.href}
                         aria-label={`${plan.title}, ${plan.period} — ${formatPrice(plan.price)}. Позвонить и купить`}
-                        className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-btn border border-line text-green transition-colors hover:border-green hover:bg-green hover:text-bg"
+                        className="react grow-btn fill-on-touch inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-btn border border-line text-green"
                       >
                         <ArrowRight size={20} aria-hidden />
                       </a>

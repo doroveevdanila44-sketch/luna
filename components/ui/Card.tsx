@@ -30,14 +30,13 @@ export function Card({
 }: Props) {
   const classes = [
     // group нужен всегда: по нему фотография внутри карточки ловит
-    // group-hover и растёт вместе с ней (docs/DESIGN.md)
-    'group relative flex overflow-hidden rounded-card border bg-panel',
+    // отклик и растёт вместе с ней (docs/DESIGN.md)
+    'group react relative flex overflow-hidden rounded-card border bg-panel',
     direction === 'row' ? 'flex-row' : 'flex-col',
-    highlighted ? 'border-green' : 'border-line',
-    interactive
-      ? 'transition-[transform,border-color,box-shadow] duration-300 ease-out ' +
-        'hover:scale-[1.02] active:scale-[1.03] hover-border-green'
-      : 'transition-[border-color,box-shadow] duration-300 ease-out',
+    // Выделенный тариф в покое — приглушённая зелёная граница, без свечения:
+    // полный --green оставлен на наведение
+    highlighted ? 'border-green-soft' : 'border-line',
+    interactive ? 'grow-card lit' : '',
     className,
   ]
     .filter(Boolean)
