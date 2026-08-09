@@ -29,8 +29,10 @@ const MAP = [
   { match: 'атмосфера клуба 3', out: 'atmosphere-3', maxWidth: 1400 },
   { match: 'атмосфера клуба 4', out: 'atmosphere-4', maxWidth: 1400 },
   { match: 'начать сегодня', out: 'cta-banner', maxWidth: 2000 },
-  // Отдельный кадр баннера для телефона: гиря помещается целиком
-  { match: 'телефон гиря', out: 'cta-banner-mobile', maxWidth: 1100 },
+  // Кадр гири под телефон: третья позиция галереи, гиря помещается целиком.
+  // Имя по десктопной паре — этот кадр подменяет atmosphere-4.jpg,
+  // хотя в галерее стоит третьим (фото 2 и 5 ещё нет).
+  { match: 'телефон гиря', out: 'atmosphere-4-mobile', maxWidth: 1100 },
 ]
 
 async function main() {

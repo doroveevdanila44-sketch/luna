@@ -8,6 +8,12 @@
 export type GalleryItem = {
   readonly id: string
   readonly src: string
+  /**
+   * Отдельный кадр для ширин до 768px. Нужен там, где вертикальный
+   * десктопный снимок на телефоне режется по главному объекту.
+   * Если не задан — на всех ширинах показывается src.
+   */
+  readonly mobileSrc?: string
   readonly alt: string
   /**
    * Вес колонки в горизонтальной ленте на десктопе.
@@ -37,6 +43,8 @@ export const gallery: readonly GalleryItem[] = [
   {
     id: 'atmosphere-4',
     src: '/images/atmosphere-4.jpg',
+    // Вертикальный кадр режет гирю на телефоне — там свой снимок
+    mobileSrc: '/images/atmosphere-4-mobile.jpg',
     alt: 'Гиря «Луна» 24 кг под фирменным знаком клуба',
     weight: 1,
     position: 'center',
