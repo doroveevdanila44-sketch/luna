@@ -26,12 +26,16 @@ const ORDER = [
  * Массив данных общий, компонент режет его через .slice() — лишние карточки
  * не рендерятся вовсе, а не прячутся через display:none (CLAUDE.md, п.7).
  *
+ * Стартовое значение — мобильное, и это принципиально: при десктопном
+ * стартовом значении сервер отдавал бы телефону все карточки, браузер начинал
+ * качать их фотографии ещё до гидратации и отбирал канал у hero. Ровно та
+ * проблема, от которой правило и защищает.
+ *
  * Объект counts должен быть константой на уровне модуля, иначе эффект
  * будет пересоздаваться на каждый рендер.
  */
 export function useVisibleCount(counts: VisibleCounts): number {
-  const desktop = counts.xl ?? counts.lg ?? counts.md ?? counts.sm ?? counts.base
-  const [count, setCount] = useState(desktop)
+  const [count, setCount] = useState(counts.base)
 
   useEffect(() => {
     const list = ORDER.map(([key, query]) => [key, window.matchMedia(query)] as const)

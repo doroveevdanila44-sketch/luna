@@ -55,7 +55,7 @@ export function Directions() {
                       src={direction.image}
                       alt=""
                       fill
-                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      sizes="(min-width: 1280px) 300px, (min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                       className={`object-cover ${positions[direction.id] ?? 'object-center'}`}
                     />
                     <span

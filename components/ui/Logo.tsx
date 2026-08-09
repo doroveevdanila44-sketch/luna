@@ -16,11 +16,9 @@ export function Logo({ size = 'sm', className = '' }: Props) {
   const isMd = size === 'md'
 
   return (
-    <Link
-      href="/"
-      aria-label={`${contacts.name} — ${contacts.caption}`}
-      className={`group inline-flex flex-col leading-none ${className}`}
-    >
+    // aria-label не ставим: видимый текст «ЛУНА / ФИТНЕС-КЛУБ» уже даёт
+    // доступное имя, а несовпадение с ним ломает доступность ссылки
+    <Link href="/" className={`group inline-flex flex-col leading-none ${className}`}>
       <span
         className={`font-display font-extrabold uppercase tracking-[0.10em] text-text transition-colors group-hover:text-green ${
           isMd ? 'text-[26px]' : 'text-[20px]'

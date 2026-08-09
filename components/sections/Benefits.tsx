@@ -2,6 +2,7 @@ import { Dumbbell, Gift, HeartPulse, Trophy, type LucideIcon } from 'lucide-reac
 
 import { Reveal } from '@/components/ui/Reveal'
 import { benefits, type BenefitIcon } from '@/data/benefits'
+import { sectionTitles } from '@/data/home'
 import { anchors } from '@/data/nav'
 
 const icons: Record<BenefitIcon, LucideIcon> = {
@@ -23,6 +24,8 @@ export function Benefits() {
   return (
     <section id={anchors.about} className="relative z-10 -mt-10 lg:-mt-16">
       <div className="container-luna">
+        <h2 className="sr-only">{sectionTitles.about}</h2>
+
         <Reveal>
           <ul className="grid gap-px overflow-hidden rounded-block border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
             {benefits.map((benefit) => {

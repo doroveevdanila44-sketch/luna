@@ -34,10 +34,10 @@
 - [x] commit + push
 
 ## Этап 4 — доводка
-- [ ] Анимации появления и hover по docs/DESIGN.md, prefers-reduced-motion
-- [ ] SEO: title, description, OG-картинка (hero), LocalBusiness JSON-LD с адресом,
+- [x] Анимации появления и hover по docs/DESIGN.md, prefers-reduced-motion
+- [x] SEO: title, description, OG-картинка (hero), LocalBusiness JSON-LD с адресом,
       телефоном, координатами, рейтингом 4.9
-- [ ] Lighthouse: Performance ≥ 90, Accessibility ≥ 95 на мобиле
-- [ ] favicon-заглушка (зелёный круг луны на чёрном)
+- [x] Lighthouse: Performance ≥ 90, Accessibility ≥ 95 на мобиле
+- [x] favicon-заглушка (зелёный круг луны на чёрном)
 - [ ] Деплой на Vercel, прислать превью-ссылку
-- [ ] commit + push
+- [x] commit + push

@@ -31,7 +31,7 @@ export function Atmosphere() {
                 src={item.src}
                 alt={item.alt}
                 fill
-                sizes="(min-width: 1024px) 33vw, (min-width: 768px) 33vw, 50vw"
+                sizes="(min-width: 1280px) 420px, (min-width: 768px) 33vw, 50vw"
                 className="object-cover transition-transform duration-500 ease-out hover:scale-[1.04] motion-reduce:transition-none motion-reduce:hover:scale-100"
                 style={{ objectPosition: item.position ?? 'center' }}
               />

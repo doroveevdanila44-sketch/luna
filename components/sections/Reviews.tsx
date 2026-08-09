@@ -61,6 +61,7 @@ function ReviewCard({ review }: { review: Review }) {
 
         <div
           className="mt-3 flex items-center gap-1"
+          role="img"
           aria-label={`Оценка ${review.rating} из 5`}
         >
           {Array.from({ length: 5 }, (_, i) => (

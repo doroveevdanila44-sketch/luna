@@ -28,6 +28,8 @@ export const ctaBanner = {
 } as const
 
 export const sectionTitles = {
+  /** Заголовок плашки преимуществ — визуально скрыт, нужен для порядка h1→h2→h3 */
+  about: 'О клубе',
   directions: 'Наши направления',
   atmosphere: 'Атмосфера клуба',
   trainers: 'Наши тренеры',
@@ -51,7 +53,8 @@ export const ui = {
   copyright: '© 2026 Фитнес-клуб ЛУНА. Все права защищены.',
   privacy: { label: 'Политика конфиденциальности', href: '/politika-konfidencialnosti' },
   slogan: 'Твоя сила. Твой ритм. Твой результат.',
-  mapAria: 'Открыть карточку клуба в 2ГИС',
+  // Содержит слово «ЛУНА» — оно видно на карте, доступное имя должно его включать
+  mapAria: 'ЛУНА на карте — открыть карточку клуба в 2ГИС',
   menuOpen: 'Открыть меню',
   menuClose: 'Закрыть меню',
   contactsTitle: 'Контакты',

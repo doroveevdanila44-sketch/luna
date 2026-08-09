@@ -22,8 +22,7 @@ export function MapCard({ className = '' }: Props) {
       <svg
         viewBox="0 0 320 190"
         className="h-full w-full"
-        role="img"
-        aria-label={`${contacts.name}, ${contacts.address.street}`}
+        aria-hidden
         preserveAspectRatio="xMidYMid slice"
       >
         <rect width="320" height="190" fill="var(--panel-2)" />

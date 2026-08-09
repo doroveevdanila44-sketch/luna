@@ -46,7 +46,7 @@ export function Pricing() {
                   <div className="mt-auto flex items-end justify-between gap-3 pt-8">
                     <div>
                       {plan.basePrice ? (
-                        <s className="block font-sans text-caption text-muted/70 decoration-muted/60">
+                        <s className="block font-sans text-caption text-muted">
                           {formatPrice(plan.basePrice)}
                         </s>
                       ) : null}
